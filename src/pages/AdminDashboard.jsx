@@ -242,7 +242,7 @@ const AdminDashboard = () => {
             <h1 className="text-5xl font-black italic text-white uppercase tracking-tighter leading-none mb-1">
               Admin<span className="text-brand-accent">Panel</span>
             </h1>
-            <p className="text-gray-500 font-mono text-[10px] uppercase tracking-[0.2em]">Nexus Hardware Management // v2.6</p>
+            <p className="text-gray-500 font-mono text-[10px] uppercase tracking-[0.2em]">VeloRace Management // v2.6</p>
           </div>
           <div className="flex gap-2 mt-6 md:mt-0">
             <button onClick={loadData} className="p-4 bg-[#16191e] border border-white/10 hover:border-brand-accent text-white transition-all">
