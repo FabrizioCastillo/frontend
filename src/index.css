@@ -21,8 +21,8 @@
 
   /* Tarjeta Estilo Industrial */
   .card-showroom {
-    @apply relative bg-surface-900 border-l-2 border-transparent p-8 transition-all duration-500 overflow-hidden;
-    clip-path: polygon(0 0, 100% 0, 100% 90%, 95% 100%, 0 100%);
+    @apply overflow-hidden; /* Esto asegura que el scale-110 no agrande la página */
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 95% 100%, 0 100%);
   }
 
   .card-showroom:hover {
