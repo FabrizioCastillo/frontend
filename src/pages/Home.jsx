@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams } from 'react-router-dom';
 import { Bike, Filter, ArrowDown, RefreshCw, AlertTriangle, Activity, Zap, Wrench, Mountain, ChevronRight } from 'lucide-react';
 import ProductCard from '../components/product/ProductCard';
-// Importamos nuestro nuevo hook
 import { useShopData } from '../hooks/useShopData';
 
 // --- COMPONENTE AUXILIAR: Skeleton de Carga Mejorado ---
@@ -20,26 +19,20 @@ const ProductSkeleton = () => (
     </div>
   </div>
 );
-// ----------------------------------------------------
 
 const Home = () => {
-  // Usamos el custom hook. ¡Mira qué limpio!
   const { products, categories, loading, error, refetch } = useShopData();
-  
   const [activeCategory, setActiveCategory] = useState('Todos');
   const [searchParams, setSearchParams] = useSearchParams();
   const searchQuery = searchParams.get('search') || '';
   const categoryQuery = searchParams.get('category'); 
 
-  // Lógica de filtrado (Optimizada con useMemo para evitar recálculos innecesarios)
   const filteredProducts = useMemo(() => {
     if (loading || error) return [];
-    
     let result = products;
 
     if (searchQuery) {
         result = result.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
-        // Efecto secundario: scroll al buscar (debe estar en useEffect, pero para simplificar lo dejamos aquí controlado)
         if (activeCategory !== 'Resultados') setActiveCategory('Resultados');
          setTimeout(() => document.getElementById('tienda')?.scrollIntoView({ behavior: 'smooth' }), 100);
     } else if (categoryQuery) {
@@ -51,7 +44,6 @@ const Home = () => {
     return result;
   }, [products, searchQuery, categoryQuery, loading, error, activeCategory]);
 
-
   const filterByCategory = (categoryName) => {
     setSearchParams(prev => {
         if (categoryName === 'Todos') prev.delete('category');
@@ -61,10 +53,10 @@ const Home = () => {
   };
 
   return (
-    // Usamos el color semántico 'bg-surface-base' y scroll-mt-32 para el header fijo
-    <div className="min-h-screen bg-surface-base text-gray-200 font-sans selection:bg-brand-accent selection:text-black scroll-mt-32" id="inicio">
+    /* FIJADO: overflow-x-hidden evita que cualquier elemento interno cree scroll lateral */
+    <div className="min-h-screen bg-surface-base text-gray-200 font-sans selection:bg-brand-accent selection:text-black scroll-mt-32 overflow-x-hidden" id="inicio">
       
-      {/* HERO SECTION (Sin cambios mayores, solo colores semánticos) */}
+      {/* HERO SECTION */}
       <section className="relative h-[85vh] flex items-center bg-brand-carbon overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-brand-accent/10 via-brand-carbon to-brand-carbon"></div>
         
@@ -79,7 +71,8 @@ const Home = () => {
                 <span className="h-[2px] w-8 bg-brand-accent"></span>
                 <span className="text-brand-accent font-mono text-xs tracking-[0.3em] uppercase">Mendoza / División Pro Racing</span>
             </div>
-            <h1 className="text-7xl md:text-9xl font-black text-white italic tracking-tighter leading-[0.85] mb-8 relative z-20">
+            {/* FIJADO: break-words previene desbordes por texto largo */}
+            <h1 className="text-7xl md:text-9xl font-black text-white italic tracking-tighter leading-[0.85] mb-8 relative z-20 break-words">
               DOMINA <br/> EL <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-orange-500 to-brand-accent animate-pulse">TERRENO.</span>
             </h1>
             <p className="text-gray-400 text-lg max-w-md leading-relaxed pl-2 border-l-4 border-brand-accent/20 mb-10 font-light">
@@ -113,16 +106,15 @@ const Home = () => {
         </div>
       </section>
 
-      {/* MARQUESINA */}
-      <div className="bg-brand-accent py-3 overflow-hidden relative z-20">
+      {/* MARQUESINA - FIJADO: w-full y overflow-hidden */}
+      <div className="bg-brand-accent py-3 overflow-hidden relative z-20 w-full">
         <div className="animate-marquee whitespace-nowrap flex gap-16 text-black font-black italic uppercase tracking-widest text-sm">
-          {/* (Contenido de la marquesina igual que antes...) */}
           <span>/// Ciclismo de Alto Rendimiento</span><span>/// Tecnología de Fibra de Carbono</span><span>/// Ingeniería de Precisión</span><span>/// Probado en Montañas de Mendoza</span><span>/// Componentes Listos para Competir</span><span>/// Ciclismo de Alto Rendimiento</span><span>/// Tecnología de Fibra de Carbono</span><span>/// Ingeniería de Precisión</span><span>/// Probado en Montañas de Mendoza</span><span>/// Componentes Listos para Competir</span>
         </div>
       </div>
 
-      {/* TIENDA */}
-      <section id="tienda" className="py-24 max-w-[1400px] mx-auto px-6 relative scroll-mt-24">
+      {/* TIENDA - FIJADO: overflow-hidden para contener el texto absoluto de fondo */}
+      <section id="tienda" className="py-24 max-w-[1400px] mx-auto px-6 relative scroll-mt-24 overflow-hidden">
           <div className="absolute top-0 right-0 text-[20vw] font-black text-white/5 leading-none italic select-none pointer-events-none -translate-y-1/2 translate-x-1/4">TIENDA</div>
 
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8 relative z-10">
@@ -133,7 +125,6 @@ const Home = () => {
               </h2>
             </div>
 
-            {/* Filtros (Solo se muestran si no hay error y no está cargando) */}
             {!error && !loading && categories.length > 0 && (
               <div className="flex flex-wrap gap-1 bg-surface-card p-1 border border-white/10 rounded-sm">
                 {['Todos', ...categories.map(c => c.name)].map((catName) => (
@@ -154,7 +145,6 @@ const Home = () => {
           </div>
 
           <div className="min-h-[400px] relative z-10">
-            {/* ESTADO DE CARGA MEJORADO */}
             {loading && (
                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                  {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
@@ -163,7 +153,6 @@ const Home = () => {
                </div>
             )}
 
-            {/* NUEVO: ESTADO DE ERROR */}
             {error && (
               <div className="py-32 flex flex-col items-center justify-center border-2 border-dashed border-red-500/30 bg-red-500/5">
                 <AlertTriangle size={48} className="text-red-500 mb-4 animate-pulse" />
@@ -177,7 +166,6 @@ const Home = () => {
               </div>
             )}
 
-            {/* CONTENIDO NORMAL */}
             {!loading && !error && (
               <>
                 <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
