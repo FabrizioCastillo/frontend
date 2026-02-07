@@ -1,0 +1,23 @@
+Integrantes del grupo:
+
+Luna Joaquín
+DNI 46.233.558
+Legajo 52685
+
+Palmero Manuel
+DNI 47.152.849
+Legajo 52730
+
+GitHub - Frontend: https://github.com/Salita-Verde-SA/ecommerce-frontend
+
+GitHub - Backend: https://github.com/Salita-Verde-SA/ecommerce-backend
+
+Backend: https://ecommerce-backend-q7fi.onrender.com
+
+Backend - Swagger: https://ecommerce-backend-q7fi.onrender.com/docs
+
+Frontend - Vercel: https://ecommerce-frontend-nu-livid.vercel.app/
+
+Frontend - Panel de administrador: iniciar sesión con admin@admin.admin
+
+Video: https://youtu.be/cZfm8ch-cr8
